@@ -59,7 +59,7 @@ class Database
                         marca VARCHAR(40) NOT NULL,
                         modello VARCHAR(40) NOT NULL,
                         anno YEAR NOT NULL,
-                        descrizione VARCHAR(255) NOT NULL,
+                        descrizione TEXT NOT NULL,
                         PRIMARY KEY(id),
                         FOREIGN KEY (username) REFERENCES utente(username)
                         )";
@@ -75,25 +75,33 @@ class Database
 
     function create_database()
     {
+        //-1 -> errore nella connessione
+        //0 -> tutto apposto
+        //1 -> errore nella creazione del database
+        //2 -> errore nella creazione delle tabelle
         if ($this->connect()) {
             $sql = 'CREATE DATABASE IF NOT EXISTS ibikers;';
             if (!$this->conn->query($sql) === TRUE) {
                 $this->disconnect();
-                return false;
+                return 1;
             }
 
             if(!$this->create_tables()) {
                 $this->disconnect();
-                return false;
+                return 2;
             }
 
             $this->disconnect();
-            return true;
+            return 0;
+        } 
+        else {
+            return -1;
         }
     }
 
     function check_login($username, $password) 
     {
+        //-1 -> errore nella connessione
         //0 -> login ok
         //1 -> utente non trovato
         //2 -> password sbagliata
@@ -116,16 +124,20 @@ class Database
                 return 1;
             }
         }
+        else {
+            return -1;
+        }
     }
 
     function register_user($username, $email, $password) 
     {
+        //-1 -> errore nella connessione
         //0 -> registrazione eseguita
         //1 -> utente gia presente
         if ($this->connect_db()) {
             try{
-                $statement = $this->conn->prepare("INSERT INTO utente(username, email, password) VALUES (?,?,?)");
-                $statement->bind_param("sss", $username, $email, $password);
+                $statement = $this->conn->prepare('INSERT INTO utente(username, email, password) VALUES (?,?,?)');
+                $statement->bind_param('sss', $username, $email, $password);
                 $statement->execute();
             }
             catch (Exception $e) {
@@ -137,16 +149,148 @@ class Database
             $this->disconnect();
             return 0;
         }
+        else {
+            return -1;
+        }
+    }
+
+    function insert_post($username, $marca, $modello, $anno, $descrizione) {
+        //-1 -> errore nella connessione
+        //0 -> inserimento eseguito
+        //1 -> errore nell'inserimento
+        if ($this->connect_db()) {
+            try {
+                $statement = $this->conn->prepare('INSERT INTO post(username, marca, modello, anno, descrizione) VALUES (?,?,?,?,?)');
+                $statement->bind_param('sssss', $username, $marca, $modello, $anno, $descrizione);
+                $statement->execute();
+            }
+            catch (Exception $e) {
+                $statement->close();
+                $this->disconnect();
+                return 1;
+            }
+            $statement->close();
+            $this->disconnect();
+            return 0;
+        }
+        else {
+            return -1;
+        }
+    }
+
+    function get_all_posts() {
+        //se ritorna $posts -> ci sono risultati
+        //-1 -> nessuna connessione
+        //1 -> 0 dati
+        if ($this->connect_db()) {
+            $sql = "SELECT * FROM post";
+            $result = $this->conn->query($sql);
+            if ($result->num_rows > 0) {
+                $posts = $result->fetch_all(MYSQLI_ASSOC);
+                $this->disconnect();
+                return $posts;
+            }
+            else {
+                $this->disconnect();
+                return 1;
+            }
+        }
+        else {
+            return -1;
+        }
+    }
+
+    function edit_post($id, $marca, $modello, $anno, $descrizione) {
+        //-1 -> errore nella connessione
+        //0 -> update andato a buon fine
+        //1 -> update non riuscito
+        if ($this->connect_db()) {
+            try {
+                $statement = $this->conn->prepare('UPDATE post SET marca = ?, modello = ?, anno = ?, descrizione = ? WHERE id = ?');
+                $statement->bind_param('ssssi', $marca, $modello, $anno, $descrizione, $id);
+                $statement->execute();
+            }
+            catch (Exception $e) {
+                $statement->close();
+                $this->disconnect();
+                return 1;
+            }
+
+            if ($statement->affected_rows > 0) {
+                $statement->close();
+                $this->disconnect();
+                return 0;
+            }
+            else {
+                $statement->close();
+                $this->disconnect();
+                return 1;
+            }
+        }
+        else {
+            return -1;
+        }
+
+    }
+
+    function delete_post($id) 
+    {
+        if ($this->connect_db()) {
+            try {
+                $statement = $this->conn->prepare('DELETE FROM post WHERE id = ?');
+                $statement->bind_param('i', $id);
+                $statement->execute();
+            }
+            catch (Exception $e) {
+                $statement->close();
+                $this->disconnect();
+                return 1;
+            }
+
+            if ($statement->affected_rows > 0) {
+                $statement->close();
+                $this->disconnect();
+                return 0;
+            }
+            else {
+                $statement->close();
+                $this->disconnect();
+                return 1;
+            }
+        }
+        else {
+            return -1;
+        }
     }
 }
 
 
 $db = new database("localhost", "root", "");
 $db->create_database();
-$ris = $db->check_login('pennarello', 'penna');
-echo $ris . "<br>";
-$insert = $db->register_user('pennarello', 'pennarello@gmail.com', 'penna');
-echo 'insert: ' . $insert . '<br>';
-$ris = $db->check_login('pennarello', 'penna');
-echo $ris . "<br>";
+
+//$deleted = $db->delete_post(2);
+//echo $deleted;
+
+//$ciccio_update = $db->edit_post(2, 'ducati', 'panigale v2 carbon fiba', '2020', "E' UNA BOMBAAZZAAAAAAAAAAAAA!!");
+//echo $ciccio_update;
+
+/*$pasticcios = $db->get_all_posts();
+foreach ($pasticcios as $pasticcio) {
+    if (isset($pasticcio)) {
+        echo 'id: ' . $pasticcio['id'];
+        echo '<br>';
+    }
+}*/
+
+//$ciccio = $db->insert_post('admin', 'ktm', 'exc 300 2t', '2023', "URTAAAAAAAAA");
+//echo $ciccio;
+
+//$ris = $db->check_login('pennarello', 'penna');
+//echo $ris . "<br>";
+
+//$insert = $db->register_user('pennarello', 'pennarello@gmail.com', 'penna');
+//echo 'insert: ' . $insert . '<br>';
+
+//$ris = $db->check_login('pennarello', 'penna');
+//echo $ris . "<br>";
 ?>
