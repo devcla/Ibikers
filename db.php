@@ -92,8 +92,61 @@ class Database
         }
     }
 
+    function check_login($username, $password) 
+    {
+        //0 -> login ok
+        //1 -> utente non trovato
+        //2 -> password sbagliata
+        if ($this->connect_db()) {
+            $sql = "SELECT username, password FROM utente WHERE username='$username'";
+            $result = $this->conn->query($sql);
+
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                if ($row['password'] == $password) {
+                    $this->disconnect();
+                    return 0;
+                }
+                else {
+                    $this->disconnect();
+                    return 2;
+                }
+            } else {
+                $this->disconnect();
+                return 1;
+            }
+        }
+    }
+
+    function register_user($username, $email, $password) 
+    {
+        //0 -> registrazione eseguita
+        //1 -> utente gia presente
+        if ($this->connect_db()) {
+            try{
+                $statement = $this->conn->prepare("INSERT INTO utente(username, email, password) VALUES (?,?,?)");
+                $statement->bind_param("sss", $username, $email, $password);
+                $statement->execute();
+            }
+            catch (Exception $e) {
+                $statement->close();
+                $this->disconnect();
+                return 1;
+            }
+            $statement->close();
+            $this->disconnect();
+            return 0;
+        }
+    }
 }
+
 
 $db = new database("localhost", "root", "");
 $db->create_database();
+$ris = $db->check_login('pennarello', 'penna');
+echo $ris . "<br>";
+$insert = $db->register_user('pennarello', 'pennarello@gmail.com', 'penna');
+echo 'insert: ' . $insert . '<br>';
+$ris = $db->check_login('pennarello', 'penna');
+echo $ris . "<br>";
 ?>
