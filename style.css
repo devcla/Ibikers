@@ -77,6 +77,25 @@ body {
     color: #162938;
 }
 
+.navigation .login-out {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navigation .logout {
+    display: none;
+}
+
+.navigation .login-out.logged .logout {
+    display: block;
+}
+
+.navigation .login-out.logged .login {
+    display: none;
+}
+
 .wrapper {
     position: relative;
     width: 400px;

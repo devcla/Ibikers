@@ -44,16 +44,23 @@
                 <a href="#">Services</a>
                 <a href="#">Contact</a>
             </div>
-            <button class="btnLogin-popup">
-                <?php
-                if (!isset($_SESSION['username'])) {
-                    echo 'Login';
-                }
-                else {
-                    echo $_SESSION['username'];
-                }
-                ?>
-            </button>
+            <div class="login-out">
+                <div class="login">
+                    <button class="btnLogin-popup">
+                        <?php
+                        if (!isset($_SESSION['username'])) {
+                            echo 'Login';
+                        }
+                        else {
+                            echo $_SESSION['username'];
+                        }
+                        ?>
+                    </button>
+                </div>
+                <div class="logout">
+                    <button id="btn-logout" class="btnLogin-popup">Logout</button>
+                </div>
+            </div>
         </nav>
     </header>
 
@@ -83,7 +90,7 @@
                     <label><input type="checkbox" name="remember">Remember me</label>
                     <a href="#">Forgot Password?</a>
                 </div>
-                <button type="submit" name="submit-login" class="btn">Login</button>
+                <button type="submit" name="submit-login" id="login" class="btn">Login</button>
                 <div class="login-register">
                     <p>Don't have an account? <a href="#" class="register-link">Register</a></p>
                 </div>
