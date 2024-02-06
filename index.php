@@ -11,6 +11,21 @@
     <?php
 
     session_start();
+
+    if (isset($_SESSION['username'])) {
+        // Unset all of the session variables
+        $_SESSION = array();
+    
+        // Destroy the session
+        session_destroy();
+    
+        // Send a response indicating successful logout
+        http_response_code(200);
+    } else {
+        // Send a response indicating unauthorized access
+        http_response_code(403);
+    }
+
     require_once 'db.php';
 
     $username = $email = $password = $remember = '';
@@ -20,11 +35,15 @@
         $password = $_POST['password'];
 
         $t = $db->check_login($username, $password);
-        echo $t;
 
         if($t == 0) {
             $_SESSION['username'] = $username;
+            echo "<script>";
+            echo "loginEvent();";
+            echo "</script>";
         }
+
+
     }
 
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit-register'])) {

@@ -23,11 +23,30 @@ iconClose.addEventListener('click', () => {
     wrapper.classList.remove('active-popup');
 });
 
-login.addEventListener('click', () => {
-    login_out.classList.add('logged');
-    wrapper.classList.remove('active-popup');
-})
+document.addEventListener('DOMContentLoaded', function () {
+    loginEvent();
+});
+
+function loginEvent() {
+    login.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        login_out.classList.add('logged');
+        wrapper.classList.remove('active-popup');
+    });
+}
 
 logout.addEventListener('click', () => {
+    var xhr = new XMLHttpRequest();
+
+    xhr.open('POST', 'logout.php', true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+    xhr.onload = function () {
+        // Redirect to the login page after logout
+        window.location.href = 'index.php';
+    };
+
     login_out.classList.remove('logged');
-})
+    xhr.send();
+});
