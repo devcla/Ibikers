@@ -35,14 +35,15 @@
         $password = $_POST['password'];
 
         $t = $db->check_login($username, $password);
-
+        echo $t;
+/*
         if($t == 0) {
             $_SESSION['username'] = $username;
             echo "<script>";
             echo "loginEvent();";
             echo "</script>";
         }
-
+*/
 
     }
 
@@ -90,7 +91,7 @@
 
         <div class="form-box login">
             <h2>Login</h2>
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
+            <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="login-form">
                 <div class="input-box">
                     <span class="icon">
                         <ion-icon name="person"></ion-icon>
@@ -109,7 +110,7 @@
                     <label><input type="checkbox" name="remember">Remember me</label>
                     <a href="#">Forgot Password?</a>
                 </div>
-                <button type="submit" name="submit-login" id="login" class="btn">Login</button>
+                <button type="submit" name="submit-login" class="btn">Login</button>
                 <div class="login-register">
                     <p>Don't have an account? <a href="#" class="register-link">Register</a></p>
                 </div>
