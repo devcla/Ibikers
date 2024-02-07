@@ -24,14 +24,19 @@ iconClose.addEventListener('click', () => {
     wrapper.classList.remove('active-popup');
 });
 
-document.addEventListener('DOMContentLoaded', function () {
+/*document.addEventListener('DOMContentLoaded', function () {
     loginForm.addEventListener('submit', function(event) {
-        event.preventDefault();
+        event.preventDefault(); 
 
         login_out.classList.add('logged');
-        wrapper.classList.remove('active-popup');        
+        wrapper.classList.remove('active-popup');
     })
-});
+});*/
+
+function handleLoginSuccess() {
+    login_out.classList.add('logged');
+    wrapper.classList.remove('active-popup');
+}
 
 logout.addEventListener('click', () => {
     var xhr = new XMLHttpRequest();
