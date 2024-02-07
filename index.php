@@ -7,29 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ibikers</title>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
 
-</head>
-
-<body>
     <?php
 
     session_start();
-
-    if (isset($_SESSION['username'])) {
-        // Unset all of the session variables
-        $_SESSION = array();
-    
-        // Destroy the session
-        session_destroy();
-    
-        // Send a response indicating successful logout
-        http_response_code(200);
-    } else {
-        // Send a response indicating unauthorized access
-        http_response_code(403);
-    }
-
     require_once 'db.php';
 
     $username = $email = $password = $remember = '';
@@ -43,7 +24,9 @@
 
         if($t == 0) {
             $_SESSION['username'] = $username;
-            echo "<script>handleLoginSuccess();</script>";
+            echo 'success';
+        } else {
+            echo 'error';
         }
 
 
@@ -54,6 +37,10 @@
     }
 
     ?>
+</head>
+
+<body>
+
 
     <header>
         <nav class="navigation">
@@ -63,7 +50,14 @@
                 <a href="#">Services</a>
                 <a href="#">Contact</a>
             </div>
-            <div class="login-out">
+            <!--<div class="login-out">-->
+            <?php 
+            if (isset($_SESSION['username'])) {
+                echo "<div class='login-out logged'>";
+            } else {
+                echo "<div class='login-out'>";
+            }
+            ?>
                 <div class="login">
                     <button class="btnLogin-popup">
                         <?php
@@ -90,7 +84,7 @@
 
         <div class="form-box login">
             <h2>Login</h2>
-            <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="login-form">
+            <form method="post" action="login.php" id="login-form">
                 <div class="input-box">
                     <span class="icon">
                         <ion-icon name="person"></ion-icon>
@@ -118,7 +112,7 @@
 
         <div class="form-box register">
             <h2>Registration</h2>
-            <form form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
                 <div class="input-box">
                     <span class="icon">
                         <ion-icon name="person"></ion-icon>
@@ -152,7 +146,7 @@
 
     </div>
 
-
+    <script src="script.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
