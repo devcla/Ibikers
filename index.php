@@ -11,6 +11,7 @@
     <?php
 
     session_start();
+    /*
     require_once 'db.php';
 
     $username = $email = $password = $remember = '';
@@ -30,7 +31,7 @@
         }
 
 
-    }
+    }*/
 
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit-register'])) {
         echo "REGISTER";
@@ -112,7 +113,7 @@
 
         <div class="form-box register">
             <h2>Registration</h2>
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
+            <form action="register.php" method="post" id="register-form">
                 <div class="input-box">
                     <span class="icon">
                         <ion-icon name="person"></ion-icon>

@@ -7,6 +7,7 @@ const login_out = document.querySelector('.login-out');
 const logout = document.getElementById('btn-logout');
 //const login = document.getElementById('login');
 const loginForm = document.getElementById('login-form');
+const registerForm = document.getElementById('register-form');
 
 registerLink.addEventListener('click', () => {
     wrapper.classList.add('active');
@@ -24,29 +25,6 @@ iconClose.addEventListener('click', () => {
     wrapper.classList.remove('active-popup');
 });
 
-/*document.addEventListener('DOMContentLoaded', function () {
-    loginForm.addEventListener('submit', function(event) {
-        event.preventDefault(); 
-
-        login_out.classList.add('logged');
-        wrapper.classList.remove('active-popup');
-    })
-});*/
-/*
-document.addEventListener('DOMContentLoaded', function () {
-    // Define your function to handle login success
-    function handleLoginSuccess() {
-        login_out.classList.add('logged');
-        wrapper.classList.remove('active-popup');
-    }
-});
-*/
-/*
-function handleLoginSuccess() {
-    login_out.classList.add('logged');
-    wrapper.classList.remove('active-popup');
-}
-*/
 document.addEventListener('DOMContentLoaded', function () {
     // Add event listener to the form submission
     loginForm.addEventListener('submit', function(event) {
@@ -70,6 +48,35 @@ document.addEventListener('DOMContentLoaded', function () {
             } else {
                 // If login is unsuccessful, display an error message or take appropriate action
                 alert('Invalid username or password');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Add event listener to the form submission
+    registerForm.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent form submission
+
+        // Fetch the form data
+        const formData = new FormData(this);
+
+        // Send the form data to register.php for validation
+        fetch('register.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
+            if (data === 'success') {
+                wrapper.classList.remove('active');
+                alert('Register successful');
+            } else {
+                // If register is unsuccessful, display an error message or take appropriate action
+                alert('Invalid data');
             }
         })
         .catch(error => {
