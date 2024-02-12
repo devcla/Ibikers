@@ -108,7 +108,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: show;
+    overflow: hidden;
     transform: scale(0);
     transition: transform .5s ease, height .2s ease;
 }
@@ -134,6 +134,22 @@ body {
 .wrapper.active .form-box.login {
     position: absolute;
     transform: translateX(-400px);
+}
+
+.wrapper.modify .form-box.login {
+    position: absolute;
+    transform: translateX(-400px);
+}
+
+.wrapper .form-box.modify {
+    position: absolute;
+    transform: translateX(-400px);
+}
+
+.wrapper.modify .form-box.modify {
+    transition: transform .18s ease;
+    position: absolute;
+    transform: translateX(0px);
 }
 
 .wrapper .form-box.register {

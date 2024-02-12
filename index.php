@@ -102,7 +102,7 @@
                 </div>
                 <div class="remember-forgot">
                     <label><input type="checkbox" name="remember">Remember me</label>
-                    <a href="#">Forgot Password?</a>
+                    <a class="modify-link" href="#">Forgot Password?</a>
                 </div>
                 <button type="submit" name="submit-login" class="btn">Login</button>
                 <div class="login-register">
