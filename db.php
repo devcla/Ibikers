@@ -65,7 +65,18 @@ class Database
                         )";
             if (!$this->conn->query($sql_post) === TRUE) {
                 return false;
-            }            
+            }     
+            $sql_utente = "CREATE TABLE IF NOT EXISTS password_reset_tokens (
+                username VARCHAR(50) NOT NULL,
+                token VARCHAR(255) NOT NULL,
+                expires_at DATETIME NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                PRIMARY KEY(username, token),
+                FOREIGN KEY (username) REFERENCES utente(username)
+                )";
+            if (!$this->conn->query($sql_utente) === TRUE) {
+                return false;
+            }       
 
         } else {
             return false;
@@ -125,6 +136,31 @@ class Database
             }
         }
         else {
+            return -1;
+        }
+    }
+
+    function get_email($username) {
+        //-1 -> errore nella connessione
+        //email -> ok
+        //1 -> utente non trovato
+        if ($this->connect_db()) {
+            $sql = "SELECT email FROM utente WHERE username = '$username'";
+            $result = $this->conn->query($sql);
+
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $email = $row['email'];
+                $this->disconnect();
+                return $email;
+            } 
+            else {
+                $this->disconnect();
+                return 1;
+            }
+        }
+        else {
+            $this->disconnect();
             return -1;
         }
     }
@@ -276,6 +312,69 @@ class Database
                 $this->disconnect();
                 return 0;
             }
+            else {
+                $statement->close();
+                $this->disconnect();
+                return 1;
+            }
+        }
+        else {
+            return -1;
+        }
+    }
+
+    function insert_token($username, $token) {
+        //-1 -> errore nella connessione
+        //0 -> inserimento eseguito
+        //1 -> errore nell'inserimento
+        $expirationTime = new DateTime();
+        $expirationTime->modify('+15 minutes');
+        $expirationTimeString = $expirationTime->format('Y-m-d H:i:s');
+
+        if ($this->connect_db()) {
+            try {
+                $statement = $this->conn->prepare('INSERT INTO password_reset_tokens (username, token, expires_at) VALUES (?, ?, ?)');
+                $statement->bind_param('sss', $username, $token, $expirationTimeString);
+                $statement->execute();
+            }
+            catch (Exception $e) {
+                $statement->close();
+                $this->disconnect();
+                return 1;
+            }
+
+            $statement->close();
+            $this->disconnect();
+            return 0;
+        }
+        else {
+            return -1;
+        }
+    }
+
+    function check_token_isvalid($username, $token) {
+        //-1 -> connessione fallita
+        //0 -> token valido
+        //1 -> errore
+        $result = '';
+        if ($this->connect_db()) {
+            try {
+                $statement = $this->conn->prepare('SELECT * FROM password_reset_tokens WHERE token = ? AND username = ? AND expires_at > NOW()');
+                $statement->bind_param('ss', $token, $username);
+                $statement->execute();
+                $result = $statement->get_result();
+            }
+            catch (Exception $e) {
+                $statement->close();
+                $this->disconnect();
+                return 1;
+            }
+
+            if ($result->num_rows === 1) {
+                $statement->close();
+                $this->disconnect();
+                return 0;
+            } 
             else {
                 $statement->close();
                 $this->disconnect();

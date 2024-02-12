@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => {
             if (data === 'success') {
                 wrapper.classList.remove('modify');
-                alert('Password changed');
+                alert('Email sent');
             } else {
                 alert('Invalid data');
             }
