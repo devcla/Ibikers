@@ -108,7 +108,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    overflow: show;
     transform: scale(0);
     transition: transform .5s ease, height .2s ease;
 }

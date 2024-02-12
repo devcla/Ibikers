@@ -154,6 +154,30 @@ class Database
         }
     }
 
+    function modify_password($username, $password) {
+        //-1 -> errore nella connessione
+        //0 -> inserimento eseguito
+        //1 -> errore nell'inserimento
+        if ($this->connect_db()) {
+            try {
+                $statement = $this->conn->prepare('UPDATE utente SET password = ? WHERE username = ?');
+                $statement->bind_param('ss', $password, $username);
+                $statement->execute();
+            }
+            catch (Exception $e) {
+                $statement->close();
+                $this->disconnect();
+                return 1;
+            }
+            $statement->close();
+            $this->disconnect();
+            return 0;
+        }
+        else {
+            return -1;
+        }
+    }
+
     function insert_post($username, $marca, $modello, $anno, $descrizione) {
         //-1 -> errore nella connessione
         //0 -> inserimento eseguito

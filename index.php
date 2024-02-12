@@ -111,6 +111,30 @@
             </form>
         </div>
 
+        <div class="form-box modify">
+            <h2>Modify</h2>
+            <form method="post" action="modify.php" id="modify-form">
+                <div class="input-box">
+                    <span class="icon">
+                        <ion-icon name="person"></ion-icon>
+                    </span>
+                    <input type="text" name="username" required>
+                    <label>Username</label>
+                </div>
+                <div class="input-box">
+                    <span class="icon">
+                        <ion-icon name="lock-closed"></ion-icon>
+                    </span>
+                    <input type="password" name="password" required>
+                    <label>Password</label>
+                </div>
+                <button type="submit" name="submit-modify" class="btn">Modify</button>
+                <div class="login-register">
+                    <p>Already have an account? <a href="#" class="login-link">Login</a></p>
+                </div>
+            </form>
+        </div>
+
         <div class="form-box register">
             <h2>Registration</h2>
             <form action="register.php" method="post" id="register-form">
