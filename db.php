@@ -111,7 +111,7 @@ class Database
 
             if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc();
-                if ($row['password'] == $password) {
+                if (password_verify($password, $row['password'])) {
                     $this->disconnect();
                     return 0;
                 }

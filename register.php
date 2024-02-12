@@ -3,7 +3,7 @@ session_start();
 require_once 'db.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $username = $_POST['username'];
-        $password = $_POST['password'];
+        $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
         $email = $_POST['email'];
 
         $t = $db->register_user($username,$email,$password);
