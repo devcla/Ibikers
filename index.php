@@ -102,11 +102,28 @@
                 </div>
                 <div class="remember-forgot">
                     <label><input type="checkbox" name="remember">Remember me</label>
-                    <a href="#">Forgot Password?</a>
+                    <a class="modify-link" href="#">Forgot Password?</a>
                 </div>
                 <button type="submit" name="submit-login" class="btn">Login</button>
                 <div class="login-register">
                     <p>Don't have an account? <a href="#" class="register-link">Register</a></p>
+                </div>
+            </form>
+        </div>
+
+        <div class="form-box modify">
+            <h2>Modify</h2>
+            <form method="post" action="modify.php" id="modify-form">
+                <div class="input-box">
+                    <span class="icon">
+                        <ion-icon name="person"></ion-icon>
+                    </span>
+                    <input type="text" name="username" required>
+                    <label>Username</label>
+                </div>
+                <button type="submit" name="submit-modify" class="btn">Modify</button>
+                <div class="login-register">
+                    <p>Already have an account? <a href="#" class="login-link">Login</a></p>
                 </div>
             </form>
         </div>

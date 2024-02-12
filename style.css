@@ -136,6 +136,22 @@ body {
     transform: translateX(-400px);
 }
 
+.wrapper.modify .form-box.login {
+    position: absolute;
+    transform: translateX(-400px);
+}
+
+.wrapper .form-box.modify {
+    position: absolute;
+    transform: translateX(-400px);
+}
+
+.wrapper.modify .form-box.modify {
+    transition: transform .18s ease;
+    position: absolute;
+    transform: translateX(0px);
+}
+
 .wrapper .form-box.register {
     position: absolute;
     transition: none;
