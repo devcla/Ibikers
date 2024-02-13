@@ -1,8 +1,9 @@
 <?php
 session_start();
-if (isset($_SESSION['username'])) {
+if (isset($_SESSION['username']) || isset($_COOKIE['username'])) {
     // Unset all of the session variables
     $_SESSION = array();
+    setcookie("username", "", time() - 3600);
 
     // Destroy the session
     session_destroy();

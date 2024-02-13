@@ -9,34 +9,11 @@
     <link rel="stylesheet" href="style.css">
 
     <?php
-
     session_start();
-    /*
-    require_once 'db.php';
-
-    $username = $email = $password = $remember = '';
-
-    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['username'])) {
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-
-        $t = $db->check_login($username, $password);
-        echo $t;
-
-        if($t == 0) {
-            $_SESSION['username'] = $username;
-            echo 'success';
-        } else {
-            echo 'error';
-        }
-
-
-    }*/
-
-    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit-register'])) {
-        echo "REGISTER";
+    $is_logged = false;
+    if (isset($_SESSION['username']) || isset($_COOKIE['username'])) {
+        $is_logged = true;
     }
-
     ?>
 </head>
 
@@ -47,29 +24,25 @@
         <nav class="navigation">
             <div class="nav-links">
                 <a href="index.php">Home</a>
+                <?php
+                if ($is_logged) {
+                    echo "<a href='insert.php'>Crea Post</a>";
+                }
+                ?>
                 <a href="#">About</a>
                 <a href="#">Services</a>
                 <a href="#">Contact</a>
             </div>
             <!--<div class="login-out">-->
             <?php 
-            if (isset($_SESSION['username'])) {
+            if ($is_logged) {
                 echo "<div class='login-out logged'>";
             } else {
                 echo "<div class='login-out'>";
             }
             ?>
                 <div class="login">
-                    <button class="btnLogin-popup">
-                        <?php
-                        if (!isset($_SESSION['username'])) {
-                            echo 'Login';
-                        }
-                        else {
-                            echo $_SESSION['username'];
-                        }
-                        ?>
-                    </button>
+                    <button class="btnLogin-popup">Login</button>
                 </div>
                 <div class="logout">
                     <button id="btn-logout" class="btnLogin-popup">Logout</button>
