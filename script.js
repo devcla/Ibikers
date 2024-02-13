@@ -50,6 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(data => {
             if (data === 'success') {
                 // If login is successful, execute operations
+                location.reload();
                 login_out.classList.add('logged');
                 wrapper.classList.remove('active-popup');
                 console.log('Login successful');
