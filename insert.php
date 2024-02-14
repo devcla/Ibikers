@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ibikers</title>
     <link rel="stylesheet" href="insert-style.css">
-
     <?php
     require 'db.php';
     session_start();
@@ -32,48 +31,37 @@
                 <a href="#">Services</a>
                 <a href="#">Contact</a>
             </div>
-            <!--<div class="login-out">-->
-            <?php 
-            if ($is_logged) {
-                echo "<div class='login-out logged'>";
-            } else {
-                echo "<div class='login-out'>";
-            }
-            ?>
-                <div class="login">
-                    <button class="btnLogin-popup">Login</button>
-                </div>
-                <div class="logout">
-                    <button id="btn-logout" class="btnLogin-popup">Logout</button>
-                </div>
+            <div class="logout">
+                <button id="btn-logout" class="btnLogout-popup">Logout</button>
             </div>
         </nav>
     </header>
 
     <div class="wrapper">
+        <span class="icon-back">
+            <ion-icon name="arrow-back"></ion-icon>
+        </span>
+
         <div class="form-box insert">
             <h2>New Post</h2>
             <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" id="insert-form">
                 <div class="input-box">
-                    <input type="text" name="marca" required>
-                    <label>Marca</label>
+                    <input type="text" id="marca" name="marca" required>
+                    <label for="marca">Marca</label>
                 </div>
                 <div class="input-box">
-                    <input type="text" name="modello" required>
-                    <label>Modello</label>
+                    <input type="text" id="modello" name="modello" required>
+                    <label for="modello">Modello</label>
                 </div>
                 <div class="input-box">
-                    <input type="number" placeholder="YYYY" name="anno" min="1950" max="2025" required>
-                    <label>Anno</label>
+                    <input type="number" id="anno" name="anno" min="1950" max="2025" required>
+                    <label for="anno">Anno</label>
                 </div>
-                <div class="input-box">
-                    <textarea name="descrizione" rows="5" cols="60"></textarea>
-                    <label>Modello</label>
+                <div class="textarea-box">
+                    <textarea id="descrizione" name="descrizione" rows="10" cols="40"></textarea>
+                    <label for="descrizione">Descrizione</label>
                 </div>
-                <button type="submit" name="submit-modify" class="btn">Reset</button>
-                <div class="login-register">
-                    <p>Already have an account? <a href="index.php" class="login-link">Login</a></p>
-                </div>
+                <button type="submit" name="submit-insert" class="btn">Insert</button>
             </form>
         </div>
     </div>

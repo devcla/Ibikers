@@ -5,7 +5,7 @@ class Database
     private $servername;
     private $username;
     private $password;
-    private const DB_NAME = 'ibikers';
+    const DB_NAME = 'ibikers';
 
     function __construct($servername,$username,$password)
     {
@@ -19,7 +19,7 @@ class Database
         return $this->conn;
     }
 
-    function connect() 
+    function connect()
     {
         $this->conn = new mysqli($this->servername,$this->username,$this->password);
         if($this->conn->connect_error) {
@@ -27,7 +27,7 @@ class Database
         }
         return true;
     }
-    function connect_db() 
+    function connect_db()
     {
         $this->conn = new mysqli($this->servername,$this->username,$this->password,Database::DB_NAME);
         if($this->conn->connect_error) {
@@ -41,7 +41,7 @@ class Database
         $this->conn->close();
     }
 
-    function create_tables() 
+    function create_tables()
     {
         if ($this->connect_db()) {
             $sql_utente = "CREATE TABLE IF NOT EXISTS utente (
@@ -110,7 +110,7 @@ class Database
         }
     }
 
-    function check_login($username, $password) 
+    function check_login($username, $password)
     {
         //-1 -> errore nella connessione
         //0 -> login ok
@@ -140,7 +140,8 @@ class Database
         }
     }
 
-    function get_email($username) {
+    function get_email($username)
+    {
         //-1 -> errore nella connessione
         //email -> ok
         //1 -> utente non trovato
@@ -165,7 +166,7 @@ class Database
         }
     }
 
-    function register_user($username, $email, $password) 
+    function register_user($username, $email, $password)
     {
         //-1 -> errore nella connessione
         //0 -> registrazione eseguita
@@ -190,7 +191,8 @@ class Database
         }
     }
 
-    function modify_password($username, $password) {
+    function modify_password($username, $password)
+    {
         //-1 -> errore nella connessione
         //0 -> inserimento eseguito
         //1 -> errore nell'inserimento
@@ -214,7 +216,8 @@ class Database
         }
     }
 
-    function insert_post($username, $marca, $modello, $anno, $descrizione) {
+    function insert_post($username, $marca, $modello, $anno, $descrizione)
+    {
         //-1 -> errore nella connessione
         //0 -> inserimento eseguito
         //1 -> errore nell'inserimento
@@ -260,7 +263,8 @@ class Database
         }
     }
 
-    function edit_post($id, $marca, $modello, $anno, $descrizione) {
+    function edit_post($id, $marca, $modello, $anno, $descrizione)
+    {
         //-1 -> errore nella connessione
         //0 -> update andato a buon fine
         //1 -> update non riuscito
@@ -293,7 +297,7 @@ class Database
 
     }
 
-    function delete_post($id) 
+    function delete_post($id)
     {
         if ($this->connect_db()) {
             try {
@@ -323,7 +327,8 @@ class Database
         }
     }
 
-    function insert_token($username, $token) {
+    function insert_token($username, $token)
+    {
         //-1 -> errore nella connessione
         //0 -> inserimento eseguito
         //1 -> errore nell'inserimento
@@ -352,7 +357,8 @@ class Database
         }
     }
 
-    function check_token_isvalid($username, $token) {
+    function check_token_isvalid($username, $token)
+    {
         //-1 -> connessione fallita
         //0 -> token valido
         //1 -> errore
