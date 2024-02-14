@@ -1,9 +1,10 @@
 <?php
 session_start();
 if (isset($_SESSION['username']) || isset($_COOKIE['username'])) {
+    $username = $_COOKIE['username'];
     // Unset all of the session variables
     $_SESSION = array();
-    setcookie("username", "", time() - 3600);
+    setcookie("username", FALSE , 1, "/", "localhost", 0);
 
     // Destroy the session
     session_destroy();
@@ -14,4 +15,3 @@ if (isset($_SESSION['username']) || isset($_COOKIE['username'])) {
     // Send a response indicating unauthorized access
     http_response_code(403);
 }
-?>
