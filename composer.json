@@ -1,0 +1,17 @@
+{
+    "name": "peron/ibikers",
+    "autoload": {
+        "psr-4": {
+            "Peron\\Ibikers\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Claudio",
+            "email": "peronclaudio1@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "squizlabs/php_codesniffer": "3.*"
+    }
+}
