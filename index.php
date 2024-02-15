@@ -51,6 +51,31 @@
         </nav>
     </header>
 
+    <div class="posts">
+        <?php
+        global $db;
+        require_once 'db.php';
+
+        $result = $db->get_all_posts();
+        if ($result !== 1 && $result !== -1) {
+            foreach ($result as $row) {
+                echo "<div class='post'>";
+                echo "  <p>{$row['username']}</p>";
+                echo "  <p class='uppercase'>{$row['marca']}</p>";
+                echo "  <p>{$row['modello']}</p>";
+                echo "  <p>{$row['anno']}</p>";
+                echo "  <p>{$row['descrizione']}</p>";
+                echo "</div>";
+            }
+        } else {
+            echo '0 results';
+        }
+
+        ?>
+    </div>
+
+
+
     <div class="wrapper">
         <span class="icon-close">
             <ion-icon name="close"></ion-icon>

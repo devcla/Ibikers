@@ -422,4 +422,3 @@ foreach ($pasticcios as $pasticcio) {
 
 //$ris = $db->check_login('pennarello', 'penna');
 //echo $ris . "<br>";
-?>

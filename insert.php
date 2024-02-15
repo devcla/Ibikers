@@ -38,10 +38,6 @@
     </header>
 
     <div class="wrapper">
-        <span class="icon-back">
-            <ion-icon name="arrow-back"></ion-icon>
-        </span>
-
         <div class="form-box insert">
             <h2>New Post</h2>
             <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" id="insert-form">
@@ -61,7 +57,6 @@
                     <textarea id="descrizione" name="descrizione" rows="10" cols="40"></textarea>
                     <label for="descrizione">Descrizione</label>
                 </div>
-                <button type="submit" name="submit-insert" class="btn">Insert</button>
             </form>
         </div>
     </div>

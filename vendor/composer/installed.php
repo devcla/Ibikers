@@ -3,7 +3,7 @@
         'name' => 'peron/ibikers',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '859a4996e42d679449fd47bfad8ff81aa3b350df',
+        'reference' => '2b24183fa8f6e17dd4c5476bbdc4ced2f4fe72a7',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'peron/ibikers' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '859a4996e42d679449fd47bfad8ff81aa3b350df',
+            'reference' => '2b24183fa8f6e17dd4c5476bbdc4ced2f4fe72a7',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

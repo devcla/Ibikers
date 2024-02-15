@@ -95,6 +95,11 @@ body {
     display: none;
 }
 
+.posts {
+    position: absolute;
+    z-index: 1;
+}
+
 .wrapper {
     position: relative;
     width: 400px;
@@ -102,7 +107,7 @@ body {
     background: transparent;
     border: 2px solid rgba(255, 255, 255, 0.171);
     border-radius: 20px;
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(50px);
     box-shadow: 0 0 30px rgba(0, 0, 0, .5);
     display: flex;
     justify-content: center;
@@ -110,6 +115,7 @@ body {
     overflow: hidden;
     transform: scale(0);
     transition: transform .5s ease, height .2s ease;
+    z-index: 2;
 }
 
 .wrapper.active-popup {
@@ -283,6 +289,33 @@ body {
 
 .login-register p a:hover {
     text-decoration: underline;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.posts {
+    position: fixed;
+    max-height: 100%;
+    max-width: 100%;
+    padding: 20px;
+    margin-top: 20px;
+    overflow-y: auto;
+    top: 60px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.post {
+    outline: #162938;
+    border: 2px solid rgba(255, 255, 255, 0.171);
+    border-radius: 20px;
+    padding: 10px 10px 10px 10px;
+    background: transparent;
+    backdrop-filter: blur(50px);
+    margin-bottom: 10px;
 }
 
 
