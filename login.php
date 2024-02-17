@@ -10,14 +10,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if($t == 0 && isset($_POST['remember'])) {
             setcookie('username', $username, [
-                'expires' => time() + 3600 * 30,
+                'expires' => time() + (60),
                 'path' => '/',
                 'domain' => 'localhost',
                 'secure' => true,
                 'httponly' => true,
                 'samesite' => 'None'
             ]);
-            $_SESSION['username'] = $username;
             echo 'success';
         } elseif ($t == 0) {
             $_SESSION['username'] = $username;

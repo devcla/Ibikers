@@ -36,7 +36,6 @@ iconBack.addEventListener('click', function() {
 
 
 
-
 logout.addEventListener('click', () => {
     let xhr = new XMLHttpRequest();
 

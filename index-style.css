@@ -297,9 +297,10 @@ body {
 
 .posts {
     position: fixed;
+    align-items: center;
     max-height: 100%;
     max-width: 100%;
-    padding: 20px;
+    padding: 30px 400px 50px 400px;
     margin-top: 20px;
     overflow-y: auto;
     top: 60px;
@@ -316,6 +317,15 @@ body {
     background: transparent;
     backdrop-filter: blur(50px);
     margin-bottom: 10px;
+    text-align: center;
+    position: relative;
+}
+
+h1 {
+    text-align: center;
+    font-size: 4em;
+    color: #fff;
+    padding: 30px;
 }
 
 

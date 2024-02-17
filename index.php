@@ -52,6 +52,7 @@
     </header>
 
     <div class="posts">
+        <h1>COMMUNITY POSTS</h1>
         <?php
         global $db;
         require_once 'db.php';
