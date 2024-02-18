@@ -60,6 +60,7 @@ class Database
                         modello VARCHAR(40) NOT NULL,
                         anno YEAR NOT NULL,
                         descrizione TEXT NOT NULL,
+                        image_path VARCHAR(100) NOT NULL,
                         PRIMARY KEY(id),
                         FOREIGN KEY (username) REFERENCES utente(username)
                         )";
@@ -216,15 +217,15 @@ class Database
         }
     }
 
-    function insert_post($username, $marca, $modello, $anno, $descrizione)
+    function insert_post($username, $marca, $modello, $anno, $descrizione, $image_path)
     {
         //-1 -> errore nella connessione
         //0 -> inserimento eseguito
         //1 -> errore nell'inserimento
         if ($this->connect_db()) {
             try {
-                $statement = $this->conn->prepare('INSERT INTO post(username, marca, modello, anno, descrizione) VALUES (?,?,?,?,?)');
-                $statement->bind_param('sssss', $username, $marca, $modello, $anno, $descrizione);
+                $statement = $this->conn->prepare('INSERT INTO post(username, marca, modello, anno, descrizione, image_path) VALUES (?,?,?,?,?,?)');
+                $statement->bind_param('ssssss', $username, $marca, $modello, $anno, $descrizione, $image_path);
                 $statement->execute();
             }
             catch (Exception $e) {
@@ -422,4 +423,3 @@ foreach ($pasticcios as $pasticcio) {
 
 //$ris = $db->check_login('pennarello', 'penna');
 //echo $ris . "<br>";
-?>

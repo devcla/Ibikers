@@ -15,11 +15,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $anno = $_POST['anno'];
     $descrizione = $_POST['descrizione'];
 
-    $t = $db->insert_post($username, $marca, $modello, $anno, $descrizione);
+    $target_directory = "uploads/";
+    $target_file = $target_directory.basename($_FILES["image"]["name"]);
+    $uploadOk = 1;
+    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
-    if ($t == 0) {
-        echo 'success';
+    $check = getimagesize($_FILES["image"]["tmp_name"]);
+    if ($check !== false) {
+        $uploadOk = 1;
     } else {
+        $uploadOk = 0;
+    }
+
+    if ($_FILES["image"]["size"] > 10485760) {
+        $uploadOk = 0;
+    }
+
+    if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+        && $imageFileType != "gif" ) {
+        $uploadOk = 0;
+    }
+
+    if ($uploadOk == 0) {
         echo 'error';
+    } else {
+        if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
+            $image_path = "uploads/" . basename($_FILES["image"]["name"]);
+            $t = $db->insert_post($username, $marca, $modello, $anno, $descrizione, $image_path);
+
+            if ($t == 0) {
+                echo 'success';
+            } else {
+                echo 'error';
+            }
+        } else {
+            echo 'error';
+        }
     }
 }

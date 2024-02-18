@@ -9,6 +9,10 @@ const logout = document.getElementById('btn-logout');
 const loginForm = document.getElementById('login-form');
 const modifyForm = document.getElementById('modify-form')
 const registerForm = document.getElementById('register-form');
+const post_form = document.getElementById('post-form');
+let edit_clicked = false;
+let delete_clicked = false;
+
 
 registerLink.addEventListener('click', () => {
     wrapper.classList.add('active');
@@ -31,6 +35,55 @@ btnPopup.addEventListener('click', () => {
 
 iconClose.addEventListener('click', () => {
     wrapper.classList.remove('active-popup');
+});
+
+function editClicked() {
+    edit_clicked = true;
+}
+
+function deleteClicked() {
+    delete_clicked = true;
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Add event listener to the form submission
+    post_form.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent form submission
+
+        // Fetch the form data
+        const formData = new FormData(this);
+
+        if (edit_clicked) {
+            window.location.href = 'edit.php?' + new URLSearchParams(formData).toString();
+            edit_clicked = false;
+        }
+        // If delete button was clicked, send form data to delete.php using POST request
+        else if (delete_clicked) {
+            fetch('delete.php', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.text())
+                .then(data => {
+                    // Handle response from delete.php
+                    if (data === 'success') {
+                        // Delete operation was successful
+                        console.log('Delete successful');
+                        location.reload();
+                    } else {
+                        // Delete operation failed
+                        console.error('Delete failed:', data);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            delete_clicked - false;
+        }
+
+
+
+    });
 });
 
 document.addEventListener('DOMContentLoaded', function () {

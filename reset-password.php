@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+global$db; <!DOCTYPE html>
 <html lang="en">
 
 <head>

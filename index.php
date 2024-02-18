@@ -29,18 +29,16 @@
                     echo "<a href='insert.php'>Crea Post</a>";
                 }
                 ?>
-                <a href="#">About</a>
-                <a href="#">Services</a>
-                <a href="#">Contact</a>
             </div>
             <!--<div class="login-out">-->
+            <div class="
             <?php 
             if ($is_logged) {
-                echo "<div class='login-out logged'>";
+                echo "login-out logged";
             } else {
-                echo "<div class='login-out'>";
+                echo "class='login-out";
             }
-            ?>
+            ?>">
                 <div class="login">
                     <button class="btnLogin-popup">Login</button>
                 </div>
@@ -50,6 +48,95 @@
             </div>
         </nav>
     </header>
+
+    <div class="post-container">
+        <h1>COMMUNITY POSTS</h1>
+        <div class="posts">
+            <?php
+            global $db;
+            require_once 'db.php';
+
+            $result = $db->get_all_posts();
+            if ($result !== 1 && $result !== -1) {
+                if ($is_logged) {
+                    foreach ($result as $row) {
+                        if (isset($_SESSION['username']) && $_SESSION['username'] == $row['username']) {
+                            echo "<form method='post' id='post-form'>";
+                            echo "    <div class='post'>";
+                            echo "        <input type='hidden' name='id' value='{$row['id']}'>";
+                            echo "        <input type='hidden' name='marca' value='{$row['marca']}'>";
+                            echo "        <input type='hidden' name='username' value='{$row['username']}'>";
+                            echo "        <input type='hidden' name='modello' value='{$row['modello']}'>";
+                            echo "        <input type='hidden' name='anno' value='{$row['anno']}'>";
+                            echo "        <input type='hidden' name='descrizione' value='{$row['descrizione']}'>";
+                            echo "        <img src='{$row['image_path']}' alt='no image'>";
+                            echo "        <p>User: @{$row['username']}</p>";
+                            echo "        <p class='uppercase'>{$row['marca']}</p>";
+                            echo "        <p>{$row['modello']}</p>";
+                            echo "        <p>{$row['anno']}</p>";
+                            echo "        <p>{$row['descrizione']}</p>";
+                            echo "        <p class='icons'>";
+                            echo "            <span class='edit'><button type='submit' name='edit_submit' class='btn-icon' onclick='editClicked()'><ion-icon name='create'></ion-icon></button></span>";
+                            echo "            <span class='trash'><button type='submit' name='delete_submit' class='btn-icon' onclick='deleteClicked()'><ion-icon name='trash'></ion-icon></button></span>";
+                            echo "        </p>";
+                            echo "    </div>";
+                            echo "</form>";
+                        } elseif (isset($_COOKIE['username']) &&  $_COOKIE['username'] == $row['username']) {
+                            echo "<form method='post' id='post-form'>";
+                            echo "    <div class='post'>";
+                            echo "        <input type='hidden' name='id' value='{$row['id']}'>";
+                            echo "        <input type='hidden' name='marca' value='{$row['marca']}'>";
+                            echo "        <input type='hidden' name='username' value='{$row['username']}'>";
+                            echo "        <input type='hidden' name='modello' value='{$row['modello']}'>";
+                            echo "        <input type='hidden' name='anno' value='{$row['anno']}'>";
+                            echo "        <input type='hidden' name='descrizione' value='{$row['descrizione']}'>";
+                            echo "        <img src='{$row['image_path']}' alt='no image'>";
+                            echo "        <p>User: @{$row['username']}</p>";
+                            echo "        <p class='uppercase'>{$row['marca']}</p>";
+                            echo "        <p>{$row['modello']}</p>";
+                            echo "        <p>{$row['anno']}</p>";
+                            echo "        <p>{$row['descrizione']}</p>";
+                            echo "        <p class='icons'>";
+                            echo "            <span class='edit'><button type='submit' name='edit_submit' class='btn-icon' onclick='editClicked()'><ion-icon name='create'></ion-icon></button></span>";
+                            echo "            <span class='trash'><button type='submit' name='delete_submit' class='btn-icon' onclick='deleteClicked()'><ion-icon name='trash'></ion-icon></button></span>";
+                            echo "        </p>";
+                            echo "    </div>";
+                            echo "</form>";
+                        } else {
+                            echo "<div class='post'>";
+                            echo "  <img src='{$row['image_path']}' alt='no image'>";
+                            echo "  <p>User: @{$row['username']}</p>";
+                            echo "  <p class='uppercase'>{$row['marca']}</p>";
+                            echo "  <p>{$row['modello']}</p>";
+                            echo "  <p>{$row['anno']}</p>";
+                            echo "  <p>{$row['descrizione']}</p>";
+                            echo "</div>";
+                        }
+                    }
+                } else {
+                    foreach ($result as $row) {
+                        echo "<div class='post'>";
+                        echo "  <img src='{$row['image_path']}' alt='no image'>";
+                        echo "  <p>User: @{$row['username']}</p>";
+                        echo "  <p class='uppercase'>{$row['marca']}</p>";
+                        echo "  <p>{$row['modello']}</p>";
+                        echo "  <p>{$row['anno']}</p>";
+                        echo "  <p>{$row['descrizione']}</p>";
+                        echo "</div>";
+                    }
+                }
+            } else {
+                echo "<div class='post'>";
+                echo "  <p class='uppercase'>0 results</p>";
+                echo "</div>";
+            }
+
+            ?>
+        </div>
+    </div>
+
+
+
 
     <div class="wrapper">
         <span class="icon-close">
@@ -63,15 +150,15 @@
                     <span class="icon">
                         <ion-icon name="person"></ion-icon>
                     </span>
-                    <input type="text" name="username" required>
-                    <label>Username</label>
+                    <input type="text" id="username" name="username" required>
+                    <label for="username" >Username</label>
                 </div>
                 <div class="input-box">
                     <span class="icon">
                         <ion-icon name="lock-closed"></ion-icon>
                     </span>
-                    <input type="password" name="password" required>
-                    <label>Password</label>
+                    <input type="password" id="password" name="password" required>
+                    <label for="password">Password</label>
                 </div>
                 <div class="remember-forgot">
                     <label><input type="checkbox" name="remember">Remember me</label>
@@ -91,8 +178,8 @@
                     <span class="icon">
                         <ion-icon name="person"></ion-icon>
                     </span>
-                    <input type="text" name="username" required>
-                    <label>Username</label>
+                    <input type="text" id="username" name="username" required>
+                    <label for="username">Username</label>
                 </div>
                 <button type="submit" name="submit-modify" class="btn">Modify</button>
                 <div class="login-register">
@@ -108,22 +195,22 @@
                     <span class="icon">
                         <ion-icon name="person"></ion-icon>
                     </span>
-                    <input type="text" name="username" required>
-                    <label>Username</label>
+                    <input type="text" id="username" name="username" required>
+                    <label for="username">Username</label>
                 </div>
                 <div class="input-box">
                     <span class="icon">
                         <ion-icon name="mail"></ion-icon>
                     </span>
-                    <input type="email" name="email" required>
-                    <label>Email</label>
+                    <input type="email" id="email" name="email" required>
+                    <label for="email">Email</label>
                 </div>
                 <div class="input-box">
                     <span class="icon">
                         <ion-icon name="lock-closed"></ion-icon>
                     </span>
-                    <input type="password" name="password" required>
-                    <label>Password</label>
+                    <input type="password" id="password" name="password" required>
+                    <label for="password">Password</label>
                 </div>
                 <div class="remember-forgot">
                     <label><input type="checkbox" required> agree to the terms & conditions</label>
