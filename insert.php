@@ -27,9 +27,6 @@
     <nav class="navigation">
         <div class="nav-links">
             <a href="index.php">Home</a>
-            <a href="#">About</a>
-            <a href="#">Services</a>
-            <a href="#">Contact</a>
         </div>
         <div class="logout">
             <button id="btn-logout" class="btnLogout-popup">Logout</button>
@@ -61,7 +58,7 @@
                 <label for="anno">Anno</label>
             </div>
             <div class="textarea-box">
-                <textarea id="descrizione" name="descrizione" rows="10" cols="40"></textarea>
+                <textarea id="descrizione" name="descrizione" rows="10" cols="40" required></textarea>
                 <label for="descrizione">Descrizione</label>
             </div>
             <button type="submit" name="submit-insert" class="btn">Insert</button>

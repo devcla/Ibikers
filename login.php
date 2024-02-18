@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if($t == 0 && isset($_POST['remember'])) {
             setcookie('username', $username, [
-                'expires' => time() + (60),
+                'expires' => time() + (3600 * 30),
                 'path' => '/',
                 'domain' => 'localhost',
                 'secure' => true,

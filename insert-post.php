@@ -40,7 +40,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo 'error';
     } else {
         if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-            $t = $db->insert_post($username, $marca, $modello, $anno, $descrizione);
+            $image_path = "uploads/" . basename($_FILES["image"]["name"]);
+            $t = $db->insert_post($username, $marca, $modello, $anno, $descrizione, $image_path);
 
             if ($t == 0) {
                 echo 'success';

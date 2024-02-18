@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ibikers</title>
+    <link rel="stylesheet" href="insert-style.css">
+    <?php session_start(); ?>
+</head>
+
+<body>
+<header>
+    <nav class="navigation">
+        <div class="nav-links">
+            <a href="index.php">Home</a>
+        </div>
+        <div class="logout">
+            <button id="btn-logout" class="btnLogout-popup">Logout</button>
+        </div>
+    </nav>
+</header>
+
+    <div class='wrapper'>
+        <span class='icon-back'>
+            <ion-icon name='arrow-back'></ion-icon>
+        </span>
+        
+        <div class='form-box insert'>
+            <h2>Edit Post</h2>
+            <form method='post' action='' id='edit-form'>
+                <input type="hidden" name="id" value="<?php echo "{$_GET['id']}"?>">
+                <input type="hidden" name="username" value="<?php echo "{$_GET['username']}"?>">
+                <div class='input-box'>
+                    <input type='text' id='marca' name='marca' value='<?php echo "{$_GET['marca']}"?>' required>
+                    <label for='marca'>Marca</label>
+                </div>
+                <div class='input-box'>
+                    <input type='text' id='modello' name='modello' value='<?php echo "{$_GET['modello']}"?>' required>
+                    <label for='modello'>Modello</label>
+                </div>
+                <div class='input-box'>
+                    <input type='number' id='anno' name='anno' min='1950' max='2025' value='<?php echo "{$_GET['anno']}"?>' required>
+                    <label for='anno'>Anno</label>
+                </div>
+                <div class='textarea-box'>
+                    <textarea id='descrizione' name='descrizione' rows='10' cols='40' required><?php echo "{$_GET['descrizione']}"?></textarea>
+                    <label for='descrizione'>Descrizione</label>
+                </div>
+                <button type='submit' name='submit-edit' class='btn'>Insert</button>
+            </form>
+        </div>
+    </div>";
+}
+?>
+
+<script src="edit-script.js"></script>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>

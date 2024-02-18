@@ -21,7 +21,7 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    padding: 20px 100px;
+    padding: 20px 200px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -30,8 +30,8 @@ body {
 
 .navigation a {
     position: relative;
-    font-size: 1.1em;
-    color: #162938;
+    font-size: 1.3em;
+    color: #000;
     text-decoration: none;
     font-weight: 500;
     margin-left: 40px;
@@ -44,7 +44,7 @@ body {
     bottom: -6px;
     width: 100%;
     height: 3px;
-    background: #162938;
+    background: #000;
     border-radius: 5px;
     transform-origin: right;
     transform: scaleX(0);
@@ -73,7 +73,7 @@ body {
 
 .navigation .btnLogout-popup:hover {
     background: #fff;
-    color: #162938;
+    color: #000;
 }
 
 .wrapper {
